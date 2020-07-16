@@ -13,15 +13,28 @@ const AccountListQuery = gql`
   }
 `;
 
+// const AccountListQuery = gql `
+//   query ContactQuery($uid : ID!){
+//     getOneAccount(user_id : $uid){
+//       user_id
+//       username
+//     }
+//   }
+// `
+
 function HomeComponent(props){
-    const { loading, error, getAccount } = useQuery(AccountListQuery);
+  var uid = 1;
+    const { loading, error, data } = useQuery(AccountListQuery, {
+      variables : {uid},
+    });
+    
     if (loading) {
         return <p>Loading...</p>
       }
       if (error) {
-          console.log(getAccount);
         return <p>{error.message}</p>
       }
+      // console.log('spatar in component : ', data.getOneAccount);
     return (
         <div className = "Maincontainer">
             <div className = "TableContainer">
@@ -36,7 +49,7 @@ function HomeComponent(props){
             
                 <Table.Body>
                     {
-                        getAccount.map((item) => (
+                        data.getAccount.map((item) => (
                             <Table.Row>
                                 <Table.Cell>{item.user_id}</Table.Cell>
                                 <Table.Cell>{item.username}</Table.Cell>
