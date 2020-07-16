@@ -1,5 +1,7 @@
-import { resolvers } from './resolver';
-import {makeExecutableSchema} from 'graphql-tools';
+// import { resolvers } from './resolver';
+// import {makeExecutableSchema} from 'graphql-tools';
+import { ApolloServer } from 'apollo-server-express';
+import {resolvers} from './resolver.js';
 
 const typeDefs = `
     
@@ -30,8 +32,19 @@ const typeDefs = `
     }
 `;
 
-const schema = makeExecutableSchema({typeDefs, resolvers});
+// const schema = makeExecutableSchema({typeDefs, resolvers});
 
-export { schema };
+const SERVER = new ApolloServer({
+    typeDefs: typeDefs,
+    resolvers: resolvers,
+    playground: {
+      endpoint: `http://localhost:4000/graphql`,
+      settings: {
+        'editor.theme': 'light'
+      }
+    }
+  });
+export default SERVER;
+// export { schema };
 
 
