@@ -10,14 +10,20 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "apollo-server-express": "^2.15.1",
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-stage-0": "^6.24.1",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-graphql": "^0.9.0",
     "graphql": "^15.1.0",
     "graphql-tools": "^6.0.11",
     "mongoose": "^5.9.20",
-    "nodemon": "^2.0.4"
+    "nodemon": "^2.0.4",
+    "pg": "^8.3.0",
+    "pg-hstore": "^2.3.3",
+    "sequelize": "^6.3.3"
   }
 }

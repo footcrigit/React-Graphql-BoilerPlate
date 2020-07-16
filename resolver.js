@@ -1,30 +1,35 @@
-class Friend {
-    constructor (id , {FirstName,LastName,gender,language,emails, contacts}){
-        this.id = id;
-        this.FirstName = FirstName;
-        this.LastName = LastName;
-        this.gender = gender;
-        this.language = language;
-        this.emails = emails;
-        this.contacts = contacts
-    }
-}
-const FriendDatabse = {}
-
-//resolver map
-
-
+import { Account } from './dbConnectors';
 export const resolvers = { 
     Query : {
-        getFriend : (root, { id }) => {
-            return new Friend(id, FriendDatabse[id]);
-        }
+        getAccount : () => {
+            return Account.findAll();
+        },
+        hello : () => {
+            return "hello there"
+        },
+        getOneAccount: async (root, { user_id }) => {
+            let resp = await Account.findAll({where : { user_id : user_id}})
+            let account = resp[0]
+            if (account)
+                return account.dataValues
+            else{
+                return "Not found"
+            }
+        },
     },
     Mutation : {
-        createFriend : (root, { input }) => {
-            let id = require('crypto').randomBytes(10).toString('hex');
-            FriendDatabse[id] = input;
-            return new Friend(id,input)
-        },
-    },  
+        createAccount : (root, {input}) => {
+            return new Promise ((resolve,object) => {
+                Account.create({
+                    user_id : input.user_id,
+                    username : input.username,
+                    password : input.password,
+                    email : input.email,
+                    created_on : input.created_on,
+                    last_login : input.last_login
+                })
+                resolve("Insert Successfull!")
+            })
+        }
+    }
 };

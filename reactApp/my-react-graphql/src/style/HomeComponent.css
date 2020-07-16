@@ -1,0 +1,11 @@
+.Maincontainer{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.TableContainer{
+    width: 50%;
+    margin-left: 20%;
+    margin-top: 10%;
+}

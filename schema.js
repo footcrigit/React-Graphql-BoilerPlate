@@ -2,38 +2,31 @@ import { resolvers } from './resolver';
 import {makeExecutableSchema} from 'graphql-tools';
 
 const typeDefs = `
-    type Friend  {
-        id : ID,
-        FirstName : String,
-        LastName : String,
-        gender : String,
-        language : String,
-        emails : String,
-        contacts : [Contact]
-    }
-    type Contact {
-        FirstName : String
-        LastName : String
+    
+    type Account {
+        user_id : ID,
+        username : String,
+        password : String,
+        email : String,
+        created_on : String,
+        last_login : String
     }
     type Query {
-        getFriend(id : ID) : Friend
+        getAccount: [Account]
+        hello : String
+        getOneAccount(user_id : ID!) : Account
     }
 
-    input FriendInput {
-        id : ID,
-        FirstName : String!
-        LastName : String
-        gender : String
-        language : String
-        emails : String
-        contacts : [ContactInput]
-    }
-    input ContactInput {
-        FirstName : String
-        LastName : String
+    input AccountInput{
+        user_id : ID,
+        username : String,
+        password : String,
+        email : String,
+        created_on : String,
+        last_login : String
     }
     type Mutation {
-        createFriend(input : FriendInput) : Friend
+        createAccount(input: AccountInput): String
     }
 `;
 

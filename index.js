@@ -1,18 +1,18 @@
 import express from 'express';
-import graphqlHTTP from 'express-graphql';
+import bodyParser from 'body-parser';
+import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
+import cors from 'cors';
 import { schema } from './schema';
 
-const app = express();
+const myGraphQLSchema = schema;
+const PORT = 4000;
+const server = express();
 
-app.get('/', (req,resp) => {
-    resp.send('graph ql is amizing');
-})
+server.use('*', cors({ origin: 'http://localhost:3000'}));
 
+server.use('/graphql', bodyParser.json(), graphqlExpress({ schema: myGraphQLSchema}));
+server.use('/graphiql', bodyParser.json(), graphiqlExpress({ endpointURL: '/graphql'}));
 
-app.use('/graphql', graphqlHTTP({
-    schema : schema,
-    graphiql: true,
-}));
-
-
-app.listen(8080, () => console.log("rutrn server on port 8080/graphql"));
+server.listen(PORT, () =>
+  console.log(`Your GraphQL server is running on port ${PORT}`)
+);
